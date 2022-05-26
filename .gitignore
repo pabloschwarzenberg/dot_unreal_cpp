@@ -15,5 +15,4 @@ Release/
 *.opendb
 *.db
 .DS_Store
-*.uproject
 *.xcworkspace
