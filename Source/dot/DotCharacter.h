@@ -35,8 +35,5 @@ public:
     void DotCrouchStop();
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = State)
-    float direccion;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = State)
     UDotAnimInstance* animBP;
 };

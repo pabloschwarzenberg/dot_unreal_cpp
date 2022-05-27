@@ -14,7 +14,6 @@ ADotCharacter::ADotCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-    direccion=1.0;
     animBP=nullptr;
     bUseControllerRotationYaw = false;
     bUseControllerRotationPitch = false;
@@ -68,9 +67,16 @@ void ADotCharacter::MoveY(float delta)
 {
     if( Controller && delta )
     {
-        FVector heading(0,10,0);
+        FVector heading(0,1,0);
+        USkeletalMeshComponent* mesh;
+        mesh=GetMesh();
         AddMovementInput(heading, delta);
         animBP->isMoving=true;
+        if (delta>0) {
+            mesh->SetWorldRotation(FRotator(0,0,0));
+        } else {
+            mesh->SetWorldRotation(FRotator(0,180,0));
+        }
     }
 }
 
@@ -83,19 +89,14 @@ void ADotCharacter::MoveX(float delta)
     if(Controller && delta)
     {
         FVector fwd = GetActorForwardVector();
+        USkeletalMeshComponent* mesh;
+        mesh=GetMesh();
         AddMovementInput(fwd,delta);
         animBP->isMoving=true;
-        //hay cambio de dirección
-        if(direccion*delta<0)
-        {
-            direccion=direccion*-1;
-            USkeletalMeshComponent* mesh;
-            mesh=GetMesh();
-            if (direccion>0) {
-                mesh->SetWorldRotation(FRotator(0,-90,0));
-            } else {
-                mesh->SetWorldRotation(FRotator(0,90,0));
-            }
+        if (delta>0) {
+            mesh->SetWorldRotation(FRotator(0,-90,0));
+        } else {
+            mesh->SetWorldRotation(FRotator(0,90,0));
         }
     }
 }
